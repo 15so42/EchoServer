@@ -7,12 +7,13 @@ namespace Echo
     {
         public static void MsgEnter(ClientState c, string msgArgs)
         {
-            Console.WriteLine("MsgEnter"+msgArgs);
+            Console.WriteLine("MsgEnter|" +
+                              ""+msgArgs);
 
             string[] split = msgArgs.Split(',');
             string desc = split[0];
             float x = float.Parse(split[1]);
-            float y = float.Parse(split[1]);
+            float y = float.Parse(split[2]);
             float z = float.Parse(split[3]);
             float eulerY = float.Parse(split[4]);
 
@@ -31,7 +32,7 @@ namespace Echo
 
         public static void MsgList(ClientState c, string msgArgs)
         {
-            Console.WriteLine("MsgList"+msgArgs);
+            Console.WriteLine("MsgList|"+msgArgs);
 
             string sendStr = "List|";
             foreach (var cs in Program.clients.Values)
@@ -44,6 +45,43 @@ namespace Echo
                 sendStr += cs.hp.ToString() + ",";
             }
             Program.Send(c,sendStr);
+        }
+        
+        public static void MsgMove(ClientState c, string msgArgs)
+        {
+            Console.WriteLine("MsgMove|"+msgArgs);
+
+            string[] split = msgArgs.Split(',');
+            string desc = split[0];
+            float x = float.Parse(split[1]);
+            float y = float.Parse(split[2]);
+            float z = float.Parse(split[3]);
+           
+
+           
+            c.x = x;
+            c.y = y;
+            c.z = z;
+            
+
+            string sendStr = "Move|" + msgArgs;
+            foreach (var cs in Program.clients.Values)
+            {
+                Program.Send(cs,sendStr);
+            }
+           
+        }
+        
+        public static void MsgAttack(ClientState c, string msgArgs)
+        {
+            Console.WriteLine("MsgAttack|"+msgArgs);
+
+            string sendStr = "Attack|"+msgArgs;
+            foreach (var cs in Program.clients.Values)
+            {
+                Program.Send(cs,sendStr);
+            }
+            
         }
     }
 }

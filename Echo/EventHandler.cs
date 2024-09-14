@@ -7,7 +7,13 @@ namespace Echo
         public static void OnDisconnect
             (ClientState c)
         {
-            Console.WriteLine("OnDisconnect");
+            //Console.WriteLine("OnDisconnect");
+            string desc = c.socket.RemoteEndPoint.ToString();
+            string sendStr = "Leave|" + desc + ",";
+            foreach (var cs in Program.clients.Values)
+            {
+                Program.Send(cs,sendStr);
+            }
         }
     }
 }

@@ -116,6 +116,7 @@ namespace Echo
         {
             byte[] bytes = System.Text.Encoding.Default.GetBytes(sendStr);
             cs.socket.Send(bytes);
+            Console.WriteLine("发送："+sendStr);
         }
     }
     
